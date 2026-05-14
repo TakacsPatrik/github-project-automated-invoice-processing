@@ -71,7 +71,7 @@
   <header>
     <div class="top">
       <span class="dot" aria-hidden="true"></span>
-      <div class="title">Air Monitor Data Integration & Reporting</div>
+      <div class="title">Automated Invoice Processing & Accounting Integrator</div>
       <div class="actions">
         <!-- <a class="btn" href="#top">Ugrás a tetejére</a> -->
         <!-- <a class="btn" href="#beillesztesi-utmutato">Beillesztési útmutató</a> -->
@@ -85,7 +85,7 @@
 
       <!-- ======= SZÖVEGES és KÉP CELLÁK – a Word dokumentum sorrendjében töltsd ki ======= -->
 
-      <!-- CELL 1: CÍM/ABSZTRAKT (Word: első oldal) -->
+      <!-- CELL 1: CÍM/ABSZTRAKT -->
       <section class="cell">
         <div class="gutter">
           <div class="prompt">In [1]:</div>
@@ -93,8 +93,8 @@
         </div>
         <div class="content">
           <h1 id="attekintes">Overview - Problem Statement</h1>
-          <p style="text-align: justify;"><em>The Qingping Air Monitor 2 is a compact, Wi-Fi-enabled air quality monitoring device that tracks indoor conditions in real time. It measures PM2.5 and PM10 particle concentrations, CO₂ levels, TVOC, as well as temperature, humidity, and noise levels. The device stores the collected data in its own online database, which can be accessed programmatically via an API, making it easy to integrate into enterprise environments and enabling automation and remote data management.</em></p>
-          <p style="text-align: justify;"><em>In this project, a total of 10 air quality monitors continuously collect indoor environmental data, which is stored on the manufacturer’s server. However, the platform only keeps historical data for up to one month, which creates a limitation for long-term analysis. Therefore, it is necessary to regularly extract and store this data locally to ensure long-term availability. In addition, proper evaluation and reporting of the collected data must be carried out to generate meaningful insights.</em></p>
+          <p style="text-align: justify;"><em>Processing monthly enterprise telecommunication invoices can be a labor-intensive and error-prone task, especially when dealing with dozens or hundreds of mobile lines. Telekom invoices are typically provided in PDF format, containing a dense mix of service fees, usage charges, and various VAT rates (e.g., 27% and 5%).</em></p>
+          <p style="text-align: justify;"><em>Before this project, the manual data entry and cross-checking of a single monthly invoice took approximately 2 hours of focused administrative work. This manual process was not only slow but carried a high risk of human error. The goal was to eliminate this bottleneck by creating a script that performs the same task with 100% accuracy in a fraction of the time.</em></p>
         </div>
       </section>
 
@@ -106,10 +106,8 @@
         </div>
         <div class="content">
           <h2 id="fejlesztes">Development process</h2>
-          <p style="text-align: justify;"><em>First, the program connects to the server via API, then retrieves the previous day’s data from all devices and saves the available measurements in Excel format, creating a separate file for each device within a daily folder.</em></p>
-          <p style="text-align: justify;"><em>After this, a processing script runs that organizes the measurements of the same type from different devices into a single Excel file, with each measurement type placed on a separate worksheet. Processing the time columns is particularly important here: missing measurements are left as empty values, ensuring that every device’s data aligns with the correct timestamps.</em></p>
-          <p style="text-align: justify;"><em>Once this is completed, an evaluation script automatically generates a predefined chart for each worksheet, illustrating the variation of the corresponding measurement type.</em></p>
-          <p style="text-align: justify;"><em>Data recovery is handled by another script, which scans through the folders and, if it detects a missing file for any device, attempts to re-download it from the API. If the download succeeds, the aggregated Excel file is updated together with its corresponding charts.</em></p>
+          <p style="text-align: justify;"><em>The development focused on high-speed data extraction and automated categorization. I implemented a robust PDF parsing layer using the PyMuPDF (fitz) library to access the digital text layer directly.</em></p>
+          <p style="text-align: justify;"><em>As shown in the attached invoice image, a major technical hurdle was the significant text fragmentation within the PDF. These broken text segments caused initial challenges during the extraction process, requiring a sophisticated state-machine parser and complex string-cleaning logic to ensure data integrity.</em></p>
         </div>
       </section>
 
@@ -123,42 +121,35 @@
         <div class="content">
           <figure>
             <div class="imgwrap">
-              <img src="qingping.png" alt="Steps of the development" />
+              <img src="qingping.png" alt="Text fragmentation within the PDF" />
             </div>
-            <figcaption style="text-align: center;"><em>Steps</em></figcaption>
+            <figcaption style="text-align: center;"><em>Text fragmentation within the PDF</em></figcaption>
           </figure>
         </div>
       </section>
 
-      <!-- CELL 4: KÉP -->
+      <!-- CELL 4: FOLYAMAT / MÓDSZER -->
       <section class="cell">
         <div class="gutter">
           <div class="prompt">In [4]:</div>
-          <div class="label">Image</div>
+          <div class="label">Text</div>
         </div>
         <div class="content">
-          <figure>
-            <div class="imgwrap">
-              <img src="temperature_qp.png" alt="Daily Temperature Chart" />
-            </div>
-            <figcaption style="text-align: center;"><em>Chart Example: Daily Temperature Chart</em></figcaption>
-          </figure>
+          <h2 id="fejlesztes">Development process</h2>
+          <p style="text-align: justify;"><em>Beyond the technical extraction, the invoice presented diverse data structures for different types of services: standard mobile phone numbers, dedicated data cards (M2M), and additional services like mobile parking fees. I designed a unified data extraction framework capable of identifying and normalizing these varied structures into a consistent, structured dataset. By using Regular Expressions (Regex) and Pandas, the system automatically maps each item to its respective TESZOR code, automating a complex accounting workflow that was previously handled manually.</em></p>
         </div>
       </section>
 
-      <!-- CELL 4: KÉP -->
+      <!-- CELL 5: FOLYAMAT / MÓDSZER -->
       <section class="cell">
         <div class="gutter">
           <div class="prompt">In [5]:</div>
-          <div class="label">Image</div>
+          <div class="label">Text</div>
         </div>
         <div class="content">
-          <figure>
-            <div class="imgwrap">
-              <img src="dailyco2_qp.png" alt="Daily CO2 Chart" />
-            </div>
-            <figcaption style="text-align: center;"><em>Chart Example: Daily CO2 Chart</em></figcaption>
-          </figure>
+          <h2 id="fejlesztes">Results & Impact</h2>
+          <p style="text-align: justify;"><em>The implementation of the telekom_szamlafeldolgozo.py script resulted in a massive efficiency gain, transforming a once-tedious administrative burden into a near-instantaneous process. While the manual processing of a single invoice previously required roughly 120 minutes of focused labor, the automated script completes the entire task in approximately 0.8 seconds. This represents an efficiency increase of roughly 9,000 times, while simultaneously eliminating the possibility of human typing errors or calculation oversights, ensuring perfect data reliability for the finance department.</em></p>
+          <p style="text-align: justify;"><em>The following figure displays the generated report, which enables colleagues to start evaluating and analyzing the invoice data immediately upon its arrival, significantly accelerating the internal financial workflow.</em></p>
         </div>
       </section>
 
@@ -171,9 +162,9 @@
         <div class="content">
           <figure>
             <div class="imgwrap">
-              <img src="dailyco2_qp_2.png" alt="Daily CO2 Chart" />
+              <img src="dailyco2_qp_2.png" alt="Generated report" />
             </div>
-            <figcaption style="text-align: center;"><em>Chart Example: Daily CO2 Chart with selection</em></figcaption>
+            <figcaption style="text-align: center;"><em>Generated report</em></figcaption>
           </figure>
         </div>
       </section>
